@@ -11,7 +11,8 @@
             color: white;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            overflow: hidden; /* Hide scrollbars */
+            scroll-snap-type: y mandatory;
         }
         .header {
             position: fixed;
@@ -64,6 +65,11 @@
             padding: 10px 0;
             text-decoration: none;
         }
+        .content-wrapper {
+            overflow-y: scroll;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+        }
         .content {
             display: flex;
             margin-left: 220px; /* Adjust to match sidebar width */
@@ -102,6 +108,7 @@
         .section {
             height: 100vh;
             padding: 20px;
+            scroll-snap-align: start;
         }
         #section1 {
             background-color: #00ff00; /* Green color */
@@ -117,7 +124,7 @@
 <body>
     <div class="header">
         <div class="logo">
-            <a href="#"><img src="logo.png" alt="Logo"></a>
+            <a href="#"><img src="/source/images/logomaituyet.png" alt="Logo"></a>
         </div>
         <div class="nav-links">
             <a href="#">about</a>
@@ -133,22 +140,24 @@
         </div>
     </div>
 
-    <div class="content">
-        <div class="main-content">
-            <div class="section" id="section1">
-                <h2>Ed Franks</h2>
-                <p>A designer/front-end developer with a passion for web design, based in Bristol, UK</p>
-                <button class="btn btn-primary">View Work</button>
-            </div>
-            <div class="section" id="section2">
-                <h2>Ed Franks 2</h2>
-                <p>More details about Ed Franks' work.</p>
-                <button class="btn btn-primary">View More</button>
-            </div>
-            <div class="section" id="section3">
-                <h2>Ed Franks 3</h2>
-                <p>Even more details about Ed Franks' work.</p>
-                <button class="btn btn-primary">Explore More</button>
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="main-content">
+                <div class="section" id="section1">
+                    <h2>Mai Tuyet</h2>
+                    <p>A designer/front-end developer with a passion for web design, based in Bristol, UK</p>
+                    <button class="btn btn-primary">View Work</button>
+                </div>
+                <div class="section" id="section2">
+                    <h2>Mai Tuyet 2</h2>
+                    <p>More details about Mai Tuyet's work.</p>
+                    <button class="btn btn-primary">View More</button>
+                </div>
+                <div class="section" id="section3">
+                    <h2>Mai Tuyet 3</h2>
+                    <p>Even more details about Mai Tuyet's work.</p>
+                    <button class="btn btn-primary">Explore More</button>
+                </div>
             </div>
         </div>
     </div>
@@ -164,9 +173,10 @@
             document.getElementById('section' + sectionNumber).scrollIntoView({ behavior: 'smooth' });
         }
 
-        window.addEventListener('scroll', function() {
-            var sections = document.querySelectorAll('.section');
-            var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        const contentWrapper = document.querySelector('.content-wrapper');
+        contentWrapper.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const scrollPosition = contentWrapper.scrollTop;
 
             sections.forEach(function(section) {
                 if (section.offsetTop <= scrollPosition + window.innerHeight / 2 && 
